@@ -1,0 +1,18 @@
+version: '4.23.0'
+services:
+  Database:
+    image: couchdb:3.3.2
+    container_name: couchdb
+    environment:
+      COUCHDB_USER: ${COUCHDB_USER:-admin}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:-admin}
+    ports:
+      - '5984:5984'
+
+# volume do not created in purpose, in order to be easier to test in the first dev steps
+
+# for building the docker container use:
+## docker compose up -d
+
+# for entering the database user interface go to:
+## http://localhost:5984/_utils/
