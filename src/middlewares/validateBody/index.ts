@@ -27,11 +27,11 @@ export const validateReqBody = (schema: JSONSchemaType<unknown>) => {
 };
 
 /**
- * Function that validate body against a predefined schema.
- * If request body is invalid, throws an error.
+ * Function that validate data against a predefined schema.
+ * If data body is invalid, throws an error.
  * Can be used for validating socket bodies.
+ * @data The data to validate
  * @param schema The predefined schema
- * @returns The middleware
  */
 export const validateBody = (
   data: unknown,
