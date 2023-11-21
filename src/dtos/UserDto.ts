@@ -6,7 +6,7 @@ export class UserDto implements Partial<IUser> {
   email: string;
   salt: string;
   hashedPassword: string;
-  name: string;
+  firstName: string;
   lastName: string;
   role: 'user' | 'admin' | 'inactive';
   createdAt: string;
@@ -23,7 +23,7 @@ export class UserDto implements Partial<IUser> {
     this.email = user.email;
     this.salt = salt;
     this.hashedPassword = hashedPassword;
-    this.name = user.name;
+    this.firstName = user.firstName;
     this.lastName = user.lastName;
     this.role = user.role;
     this.createdAt = createdAt;

@@ -11,7 +11,7 @@
   "id": "mySuperUsername",
   "email": "aliasProPlayer@gmail.com",
   "password": "mySecretPassword",
-  "name": "John",
+  "firstName": "John",
   "lastName": "Doe",
   "role": "user" | "admin" | "inactive"
 }
@@ -27,7 +27,7 @@
   "email": "aliasProPlayer@gmail.com",
   "salt": "*",              // hidden value
   "hashedPassword": "*",    // hidden value
-  "name": "John",
+  "firstName": "John",
   "lastName": "Doe",
   "role": "user" | "admin" | "inactive",
   "createdAt": "2011-10-05T14:48:00.000Z",
@@ -58,7 +58,7 @@
 
   `{ type: 'string', length: 64 }`
 
-- **name**: user name
+- **firstName**: user first name
 
   `{ type: 'string', minLength: 1}`
 
