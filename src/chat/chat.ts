@@ -7,21 +7,20 @@ export const chatSetup = (io: Server) => {
     console.log('a user connected');
     // join to the room
     socket.on("joinRoom", (room: string) => {
-      socket.join(mockedRoom);
-      socket.to(mockedRoom).emit("message", 'socket.id: ' + socket.id);
-      console.log(`Client joined room: ${mockedRoom}`);
+      socket.join(room);
+      socket.to(room).emit("message", 'socket.id: ' + socket.id);
+      console.log(`Client joined room: ${room}`);
     });
 
     // leave from the room
     socket.on("leaveRoom", (room: string) => {
-      socket.leave(mockedRoom);
-      console.log(`Client left room: ${mockedRoom}`);
+      socket.leave(room);
+      console.log(`Client left room: ${room}`);
     });
 
     // user sends a message
-    socket.on("message", ({message}: IChatMessage) => {
-      console.log(`Client sent message: ${message} `);
-      io.to(mockedRoom).emit("message", message);
+    socket.on("message", ({message}: IChatMessage, room: string) => {
+      io.to(room).emit('chat message', message);
     });
 
     // user disconnects

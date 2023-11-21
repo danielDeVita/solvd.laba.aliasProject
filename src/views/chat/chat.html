@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    function joinRoom(room) {
+      socket.emit('joinRoom', room);
+    }
+
+    function leaveRoom(room) {
+      socket.emit('leaveRoom', room);
+    }
+
+    function sendMessage(room) {
+      const message = document.getElementById(`message-${room}`).value;
+      socket.emit('message', { message }, room);
+      document.getElementById(`message-${room}`).value = '';
+      return false;
+    }
+
+    socket.on('chat message', (msg) => {
+      const item = document.createElement('li');
+      item.textContent = msg;
+      document.getElementById('messages').appendChild(item);
+    });
+  </script>
+</head>
+<body>
+  <button onclick="joinRoom('room1')">join to room 1</button>
+  <button onclick="joinRoom('room2')">join to room 2</button>
+
+  <button onclick="leaveRoom('room1')">leave from the room 1</button>
+  <button onclick="leaveRoom('room2')">leave from the room 2</button>
+
+  <ul id="messages"></ul>
+  <form onsubmit="return sendMessage('room1')">
+    <input id="message-room1" autocomplete="off" /><button>send to the room 1</button>
+  </form>
+  <form onsubmit="return sendMessage('room2')">
+    <input id="message-room2" autocomplete="off" /><button>send to the room 2</button>
+  </form>
+</body>
+</html>
