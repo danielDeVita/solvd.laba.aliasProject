@@ -7,7 +7,7 @@ export const userSchema: JSONSchemaType<IUser> = {
     id: { type: 'string', minLength: 6, maxLength: 16 },
     email: { type: 'string', minLength: 6 },
     password: { type: 'string', minLength: 8, maxLength: 32 },
-    name: { type: 'string', minLength: 1 },
+    firstName: { type: 'string', minLength: 1 },
     lastName: { type: 'string', minLength: 1 },
     role: { type: 'string', enum: ['user', 'admin', 'inactive'] },
   },
