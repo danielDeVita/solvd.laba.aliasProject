@@ -11,5 +11,5 @@ export const userSchema: JSONSchemaType<IUser> = {
     lastName: { type: 'string', minLength: 1 },
     role: { type: 'string', enum: ['user', 'admin', 'inactive'] },
   },
-  required: ['id', 'email', 'password', 'name', 'lastName', 'role'],
+  required: ['id', 'email', 'password', 'firstName', 'lastName', 'role'],
 };
