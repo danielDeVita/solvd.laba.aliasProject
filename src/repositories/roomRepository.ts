@@ -1,15 +1,16 @@
 import { GameRoomDto } from '../dtos/GameRoomDto';
-import nano from 'nano';
-const couch = nano('http://admin:admin@localhost:5984');
-const room = couch.db.use('gameroom');
+import { databases } from '../db/couchDb';
+
 
 class RoomRepository {
   async create(gameRoom: GameRoomDto): Promise<void> {
+    const room = await databases.gameRoom;
     await room.insert(gameRoom);
   }
 
   async get(roomId: string): Promise<GameRoomDto> {
-    const mangoQuery: nano.MangoQuery = {
+    const room = await databases.gameRoom;
+    const mangoQuery = {
       selector: {
         _id: `${roomId}`,
       },
@@ -18,10 +19,12 @@ class RoomRepository {
   }
 
   async join(gameRoom: GameRoomDto): Promise<void> {
+    const room = await databases.gameRoom;
     await room.insert(gameRoom);
   }
 
   async leave(gameRoom: GameRoomDto): Promise<void> {
+    const room = await databases.gameRoom;
     await room.insert(gameRoom);
   }
 }
