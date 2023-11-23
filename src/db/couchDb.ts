@@ -1,6 +1,7 @@
 import Nano from "nano";
 
-const couchdbUrl = `${process.env.COUCH_DB_URL}`
+//I can't get my process.env.COUCH_URL file to work for some reason!
+const couchdbUrl = "http://admin:1235813@localhost:5984";
 
 const couch = Nano(couchdbUrl);
 
@@ -9,10 +10,20 @@ const databases = {
   //artemDB: createDatabase('artemDB'),
 };
 
-function createDatabase(dbName: string) {
-  //create db if it doesn't exist
-  couch.db.create(dbName);
-  //or get a reference to the database if exists
+async function createDatabase(dbName: string) {
+  const dbExists = await couch.db.get(dbName).catch((err) => {
+    if (err.statusCode === 404) {
+      return false;
+    } else {
+      throw err;
+    }
+  });
+
+  if (!dbExists) {
+    //creates database if it doesn't exist
+    await couch.db.create(dbName);
+  }
+  //get a reference to the database if exists
   return couch.use(dbName);
 }
 
