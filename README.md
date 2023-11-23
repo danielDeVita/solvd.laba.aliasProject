@@ -1,8 +1,75 @@
-## API Schemas
+# Alias game
+This repository contains the final project for SOLVD's Node.js development course.
+
+## Table of Contents
+
+ - [Task](#Task)
+	 - [Game Description](#game-description)
+		 - [Objective](#objective)
+		 - [Turns](#turns)
+		 - [Scoring](#scoring)
+		 - [End Game](#end-game)
+	- [System Requirements](#system-requirements)
+	- [Setup and Authentication](#setup-and-authentication)
+		- [Database setup](#database-setup)
+	- [Database Schema](#database-schema)
+		- [User](#user)
+		- [Chat](#chat)
+		- Game
+			- [Players guessing the word](#game-players-guessing-the-word)
+			- [Player trying to explain the word](#game-player-trying-to-explain-the-word)
+-  ~~[API Endpoints](#api-endpoints)~~
+- ~~[Security  and Authentication](#security-and-authentication)~~
+- ~~[Testing](#testing)~~
+- ~~[Deployment](#deployment)~~
+- ~~[Future Enhancements](#future-enhancements)~~
+- ~~[FAQ](#faq)~~
+- ~~[Conclusion](#Conclusion)~~
+
+---
+
+## Task
+
+Develop the Alias game, a multiplayer game built with Node.js. It includes chat functionality and a feature to check for similar words.  
+  
+### Game Description  
+Alias is a word-guessing game where players form teams. Each team takes turns where one member describes a word and others guess it. The game includes a chat for players to communicate and a system to check for similar words.  
+  
+#### Objective  
+Teams try to guess as many words as possible from their teammates' descriptions.  
+  
+#### Turns  
+Each turn is timed. Describers cannot use the word or its derivatives.  
+  
+#### Scoring  
+Points are awarded for each correct guess. Similar words are checked for validation.  
+  
+#### End Game  
+The game concludes after a predetermined number of rounds, with the highest-scoring team winning.  
+  
+## System Requirements  
+- **Backend**: Node.js  
+- **Database**: CouchDB  
+  
+## Setup and Installation    
+To install the project you must follow these steps:
+1. [Install Node.js](https://nodejs.org/en/download)
+2. Clone this repository by running `git clone https://github.com/danielDeVita/solvd.laba.aliasProject.git` wherever you want to store the repository
+3. Run `npm install` inside the repository directory to install all project dependencies.
+4. To run the app locally run `npm start`
+
+### Database setup
+To setup and run the database you must follow these steps:
+1. [Install Docker](https://docs.docker.com/get-docker/)
+2. Make sure the Docker Daemon is running. You can check this using the `docker info` command. 
+3. Run `docker compose up -d` inside the repository directory to build the database docker container
+4. You can now access the database user interface [here](http://localhost:5984/_utils/)
+     
+## Database Schema
 
 ### User
 
-#### Posting into server
+##### Posting into server
 
 ```
 // Example
@@ -17,7 +84,7 @@
 }
 ```
 
-#### Getting from server
+##### Getting from server
 
 ```
 // Example
@@ -36,7 +103,7 @@
 
 ```
 
-### Properties description
+#### Properties description
 
 - **id**: used for user authentication and display name
 
@@ -78,9 +145,9 @@
 
   `{ type: Date, format:  ISO 8601 }`
 
-## Chat
+### Chat
 
-### Posting into server
+##### Posting into server
 
 ```
 // Example
@@ -90,7 +157,7 @@
 }
 ```
 
-### Getting from server
+##### Getting from server
 
 ```
 // Example
@@ -103,7 +170,7 @@
 }
 ```
 
-### Properties description
+#### Properties description
 
 - **message**: message sent by a user
 
@@ -121,9 +188,9 @@
 
   `{ type: Date, format:  ISO 8601 }`
 
-## Game: players guessing the word
+### Game: players guessing the word
 
-### Posting into server
+##### Posting into server
 
 ```
 // Example
@@ -133,7 +200,7 @@
 }
 ```
 
-### Getting from server
+##### Getting from server
 
 ```
 // Example
@@ -143,7 +210,7 @@
 }
 ```
 
-### Properties description
+#### Properties description
 
 - **word**: guessed word from players
 
@@ -153,9 +220,9 @@
 
   `{ type: boolean, enum: [true, false]}`
 
-## Game: player trying to explain the word
+### Game: player trying to explain the word
 
-### Get from server
+##### Get from server
 
 ```
 // Example
@@ -165,8 +232,27 @@
 }
 ```
 
-### Properties description
+##### Properties description
 
 - **word**: word to explain to the other players
 
-  `{ type: string, format: mingLength: 1 }`
+  `{ type: string, format: mingLength: 1 }`  
+
+## API Endpoints
+
+## Security  and Authentication
+
+  
+## Testing  
+  
+  
+## Deployment  
+
+  
+## Future Enhancements  
+  
+  
+## FAQ  
+
+  
+## Conclusion  
