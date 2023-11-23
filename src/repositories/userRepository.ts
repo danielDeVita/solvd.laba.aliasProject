@@ -32,7 +32,7 @@ export const createUser = async (userDto: UserDto) => {
   try {
     const usersDatabase = await databases.users;
 
-    return usersDatabase.insert(userDocumentWithType);
+    return await usersDatabase.insert(userDocumentWithType);
   } catch (error) {
     console.log(error);
     throw error;
