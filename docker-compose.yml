@@ -5,7 +5,7 @@ services:
     container_name: couchdb
     environment:
       COUCHDB_USER: ${COUCHDB_USER:-admin}
-      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:-admin}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:-1235813}
     ports:
       - '5984:5984'
 
