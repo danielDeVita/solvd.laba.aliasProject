@@ -4,6 +4,7 @@ import chatRouter from "./routes/chat";
 import { chatSetup } from "./chat/chat";
 import { Server } from "socket.io";
 
+
 const app = express();
 const port = 3000;
 
