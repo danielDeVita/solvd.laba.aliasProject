@@ -1,0 +1,39 @@
+<!-- 
+  This is a temp version for testing chat.
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    function joinRoom(room) {
+      socket.emit('joinRoom', room);
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      joinRoom('room1');
+    });
+    function sendMessage(room) {
+      const message = document.getElementById(`message-${room}`).value;
+      socket.emit('message', { message }, room);
+      document.getElementById(`message-${room}`).value = '';
+      return false;
+    }
+
+    socket.on('chat message', (msg) => {
+      const item = document.createElement('li');
+      item.textContent = msg;
+      document.getElementById('messages').appendChild(item);
+    });
+  </script>
+</head>
+<body>
+  <ul id="messages"></ul>
+  <form onsubmit="return sendMessage('room1')">
+    <input id="message-room1" autocomplete="off" /><button>send to the room 1</button>
+  </form>
+</body>
+</html>
