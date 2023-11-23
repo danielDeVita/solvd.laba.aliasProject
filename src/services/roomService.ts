@@ -37,6 +37,11 @@ class RoomService {
     return createdGameRoom;
   }
 
+  async getAll(): Promise<GameRoomDto[]> {
+    return await this.roomRepository.getAll();
+  }
+
+
   async join(joinInfo: IJoinGameRoomInfo): Promise<GameRoomDto> {
     // To be changed by user identification after
     // the middleware for getting the id is finished

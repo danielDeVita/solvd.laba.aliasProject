@@ -1,10 +1,9 @@
 import { Server, Socket } from 'socket.io';
 import { IChatMessage } from '../interfaces/IChatMessage';
 
-const mockedRoom = 'room';
 export const chatSetup = (io: Server) => {
   io.on('connection', (socket: Socket) => {
-    console.log('a user connected');
+    console.log('a user connected', socket.id, socket.handshake.auth.token);
     // join to the room
     socket.on("joinRoom", (room: string) => {
       socket.join(room);

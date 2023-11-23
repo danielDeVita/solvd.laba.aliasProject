@@ -8,6 +8,7 @@ const router: Router = express.Router();
 
 router.post('/', validateReqBody(gameRoomSchema), roomController.create);
 router.get('/:id', roomController.get);
+router.get('/', roomController.getAll);
 router.patch('/', validateReqBody(gameJoinRoomSchema), roomController.join);
 
 export default router;

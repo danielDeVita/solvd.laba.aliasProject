@@ -42,6 +42,19 @@ class RoomController {
     }
   };
 
+  getAll = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const createdGameRooms = await this.roomService.getAll();
+      res.status(200).json(createdGameRooms);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   /**
    * Join a game room by an id and a specified team
    */
