@@ -1,28 +1,22 @@
-import { IUser } from '../interfaces/IUser';
+import { IUser } from "../interfaces/IUser";
 
-// Declared as Partial<IUser> as password is ignored
 export class UserDto implements Partial<IUser> {
-  id: string;
   email: string;
-  salt: string;
-  hashedPassword: string;
+  password: string; //I changed the field to 'password'
   firstName: string;
   lastName: string;
-  role: 'user' | 'admin' | 'inactive';
+  role: "user" | "admin" | "inactive";
   createdAt: string;
   updatedAt: string;
 
   constructor(
     user: IUser,
-    salt: string,
-    hashedPassword: string,
+    password: string,
     createdAt: string,
     updatedAt: string
   ) {
-    this.id = user.id;
     this.email = user.email;
-    this.salt = salt;
-    this.hashedPassword = hashedPassword;
+    this.password = password;
     this.firstName = user.firstName;
     this.lastName = user.lastName;
     this.role = user.role;

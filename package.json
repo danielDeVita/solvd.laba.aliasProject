@@ -8,13 +8,17 @@
     "build": "tsc"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/body-parser": "^1.19.5",
+    "@types/jsonwebtoken": "^9.0.5",
     "ajv": "^8.12.0",
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.3.1",
     "express": "~4.16.1",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.1",
     "morgan": "~1.9.1",
     "nano": "^10.1.3",

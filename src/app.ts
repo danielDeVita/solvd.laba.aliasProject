@@ -4,6 +4,7 @@ import chatRouter from "./routes/chat";
 import { chatSetup } from "./chat/chat";
 import { Server } from "socket.io";
 
+import userRouter from "./routes/userRoutes";
 
 const app = express();
 const port = 3000;
@@ -18,3 +19,8 @@ chatSetup(new Server(
     console.log(`Server is running on http://localhost:${port}`);
   }))
 );
+app.use("/user", userRouter);
+
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
