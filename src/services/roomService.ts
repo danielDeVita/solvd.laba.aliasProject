@@ -71,6 +71,11 @@ class RoomService {
     return await this.roomRepository.get(joinInfo.roomId);
   }
 
+  /**
+   * Though to be used with web sockets. As the most probably
+   * scenario of a user leaving is because he disconnected
+   * from the game.
+   */
   async leave(roomId: string): Promise<void> {
     // To be changed by user identification after
     // the middleware for getting the id is finished
