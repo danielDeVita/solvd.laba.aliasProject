@@ -8,14 +8,16 @@ export const chatSetup = (io: Server) => {
     socket.on("joinRoom", (room: string) => {
       socket.join(room);
       socket.to(room).emit("message", 'socket.id: ' + socket.id);
-      console.log(`Client joined room: ${room}`);
     });
 
     // leave from the room
     socket.on("leaveRoom", (room: string) => {
       socket.leave(room);
-      console.log(`Client left room: ${room}`);
     });
+
+    socket.on("game handler", ({word}: {word: string}, room: string) => {
+      io.to(room).emit('game party', word);
+    })
 
     // user sends a message
     socket.on("message", ({message}: IChatMessage, room: string) => {

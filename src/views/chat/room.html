@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const room = window.location.href.split('/').pop();
+
+    function joinRoom() {
+      socket.emit('joinRoom', room);
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const dataToUpdate = {
+          team: "teamA",
+          roomId: room
+        }
+        fetch('http://localhost:3000/room/', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json', 
+            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0cmluZyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDc2MDIyNCwiZXhwIjoxNzAwNzYzODI0fQ.Ro7SPhWr9jMTZRIye3gTnoc66aVxKFMuSOiN89sVf1I`
+            
+          },
+          body: JSON.stringify(dataToUpdate) 
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            joinRoom()
+          });
+      } catch (error) {
+        console.log(error.message);
+      }
+    });
+    
+    function sendMessage() {
+      const message = document.getElementById(`message-input`).value;
+      socket.emit('message', { message }, room);
+      console.log(message);
+      document.getElementById(`messages`).value = '';
+      return false;
+    }
+
+    socket.on('chat message', (msg) => {
+      const item = document.createElement('li');
+      item.textContent = msg;
+      document.getElementById('messages').appendChild(item);
+    });
+  </script>
+</head>
+
+<body>
+  <ul id="messages"></ul>
+  <div>
+    <input id="message-input" autocomplete="off" /><button onclick="sendMessage()">send</button>
+  </div>
+</body>
+
+</html>
