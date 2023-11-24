@@ -12,16 +12,12 @@ class RoomService {
     this.roomRepository = roomRepository;
   }
 
-  async create(gameRoom: GameRoom): Promise<GameRoomDto> {
-    // To be changed by user identification after
-    // the middleware for getting the id is finished
-    const mockedUserName = uuid();
-
+  async create(gameRoom: GameRoom, userId: string): Promise<GameRoomDto> {
     const creationDate = new Date().toISOString();
     const createdGameRoom = new GameRoomDto(
       gameRoom,
       uuid(),
-      mockedUserName,
+      userId,
       creationDate,
       creationDate
     );
@@ -37,11 +33,10 @@ class RoomService {
     return createdGameRoom;
   }
 
-  async join(joinInfo: IJoinGameRoomInfo): Promise<GameRoomDto> {
-    // To be changed by user identification after
-    // the middleware for getting the id is finished
-    const mockedUserName = uuid();
-
+  async join(
+    joinInfo: IJoinGameRoomInfo,
+    userId: string
+  ): Promise<GameRoomDto> {
     const roomToJoin = await this.roomRepository.get(joinInfo.roomId);
 
     if (!roomToJoin) {
@@ -50,8 +45,8 @@ class RoomService {
 
     // Check if user is already in a team
     if (
-      roomToJoin.teamAPlayers.includes(mockedUserName) ||
-      roomToJoin.teamBPlayers.includes(mockedUserName)
+      roomToJoin.teamAPlayers.includes(userId) ||
+      roomToJoin.teamBPlayers.includes(userId)
     )
       throw new CustomError('User is already in a team', 403);
 
@@ -63,7 +58,7 @@ class RoomService {
       throw new CustomError('Selected team is complete', 403);
 
     // Joining to a team
-    roomToJoin[teamToJoin].push(mockedUserName);
+    roomToJoin[teamToJoin].push(userId);
 
     roomToJoin.updatedAt = new Date().toISOString();
     await this.roomRepository.join(roomToJoin);
