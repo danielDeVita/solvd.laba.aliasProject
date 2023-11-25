@@ -43,5 +43,5 @@ export const getUniqueWord = (wordsArray: string[]): string => {
     newWordFound = true;
   } while (newWordFound == false);
 
-  return actualWord.toLocaleLowerCase();
+  return actualWord.toLowerCase();
 };
