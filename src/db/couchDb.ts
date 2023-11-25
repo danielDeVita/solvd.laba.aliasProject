@@ -10,7 +10,7 @@ const couch = Nano(couchdbUrl);
 const databases = {
   users: createDatabase('users'),
   gameRoom: createDatabase('gameroom'),
-  //artemDB: createDatabase('artemDB'),
+  messages: createDatabase('messages'), 
 };
 
 async function createDatabase(dbName: string) {

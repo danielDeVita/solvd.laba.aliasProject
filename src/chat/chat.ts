@@ -1,5 +1,6 @@
 import { Server, Socket } from 'socket.io';
 import { IChatMessage } from '../interfaces/IChatMessage';
+import ChatMessageService from '../services/chatMessageService';
 
 export const chatSetup = (io: Server) => {
   io.on('connection', (socket: Socket) => {
@@ -20,8 +21,20 @@ export const chatSetup = (io: Server) => {
     })
 
     // user sends a message
-    socket.on("message", ({message}: IChatMessage, room: string) => {
-      io.to(room).emit('chat message', message);
+    socket.on("message", async (message: IChatMessage, room: string) => {
+      try{
+        const chatMessage = {
+          message: message.message,
+          roomId: room,
+          createdBy: socket.id,
+          createdAt: new Date().toISOString()
+        }
+        await ChatMessageService.create(chatMessage);
+        
+        io.to(room).emit('chat message', message.message);
+      } catch {
+        io.to(socket.id).emit('chat message', 'Error sending message');
+      }
     });
 
     // user disconnects
