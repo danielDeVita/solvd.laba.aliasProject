@@ -18,7 +18,10 @@ class RoomController {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const createdRoom = await this.roomService.create(req.body);
+      const createdRoom = await this.roomService.create(
+        req.body,
+        req.headers.userId as string
+      );
       res.status(201).json(createdRoom);
     } catch (error) {
       next(error);
@@ -47,7 +50,10 @@ class RoomController {
    */
   join = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const roomToJoin = await this.roomService.join(req.body);
+      const roomToJoin = await this.roomService.join(
+        req.body,
+        req.headers.userId as string
+      );
       res.status(200).json(roomToJoin);
     } catch (error) {
       next(error);
