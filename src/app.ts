@@ -8,6 +8,7 @@ import userRouter from './routes/userRoutes';
 import roomRouter from './routes/roomRoutes';
 import { expressErrorHandler } from './middlewares/errorHandlers/expressErrorHandler';
 
+
 const app = express();
 const port = 3000;
 
@@ -25,6 +26,7 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 chatSetup(io);
+
 
 server.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
