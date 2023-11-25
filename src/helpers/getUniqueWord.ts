@@ -2,16 +2,18 @@ import { CustomError } from './CustomError';
 import wordsDb from '../db/wordsDb.json';
 
 /**
- * Return and array with a specified quantities of words.
- * Each word is unique, lowered case and not composed.
+ * Function that return an unique word that is not present
+ * in array of words received by the function.
+ * The returned word is unique, lowered case and not composed.
  * Ex. ("cell phone") is a composed word, it have two words.
- * @param wordsQuantity The words quantity
- * @returns An array of words
+ * @param wordsArray The received array of words
+ * @returns A new unique word not repeated in the array of words
  */
-export const wordsArrayGenerator = (wordsQuantity: number) => {
-  const wordsArray: string[] = [];
+export const getUniqueWord = (wordsArray: string[]): string => {
   const ITERATIONS_LIMIT = 1000;
   let iterationsCounter = 0;
+  let actualWord;
+  let newWordFound = false;
 
   do {
     // Security check for infinite loop in do while
@@ -29,7 +31,7 @@ export const wordsArrayGenerator = (wordsQuantity: number) => {
       Math.random() * wordsDb.categories[categoryNumber].words.length
     );
 
-    const actualWord = wordsDb.categories[categoryNumber].words[wordNumber];
+    actualWord = wordsDb.categories[categoryNumber].words[wordNumber];
 
     // Security check, we skip composed words
     if (actualWord.split(' ').length > 1) continue;
@@ -37,9 +39,9 @@ export const wordsArrayGenerator = (wordsQuantity: number) => {
     // Security check, we only add unique words
     if (wordsArray.includes(actualWord)) continue;
 
-    // If here, we store the lowered case word
-    wordsArray.push(actualWord.toLocaleLowerCase());
-  } while (wordsArray.length < wordsQuantity);
+    // If here, the word is unique, we can leave do while loop
+    newWordFound = true;
+  } while (newWordFound == false);
 
-  return wordsArray;
+  return actualWord.toLocaleLowerCase();
 };
