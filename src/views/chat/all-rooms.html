@@ -1,14 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Rooms</title>
 </head>
+
 <body>
   <h1>Rooms</h1>
-  <ul>
-    <li><a href="/chat/room1">Room 1</a></li>
-    <li><a href="/chat/room2">Room 2</a></li>
+  <ul id="roomsList">
   </ul>
+  <script>
+    async function displayRooms() {
+      try {
+        const response = await fetch('http://localhost:3000/room');
+        const rooms = await response.json();
+
+        if (response.ok) {
+          const roomsListElement = document.getElementById('roomsList');
+
+          rooms.forEach(room => {
+            const roomDiv = document.createElement('div');
+            roomDiv.innerHTML = `
+              <li> <a href="/chat/${room._id}">${room._id}</a></li>
+            `;
+            roomsListElement.appendChild(roomDiv);
+          });
+        } else {
+          console.error('Error status:', response.status);
+        }
+      } catch (error) {
+        console.error('Error message:', error.message);
+      }
+    }
+
+    displayRooms();
+  </script>
 </body>
+
 </html>

@@ -18,6 +18,14 @@ class RoomRepository {
     return (await room.find(mangoQuery)).docs[0] as unknown as GameRoomDto;
   }
 
+  async getAll(): Promise<GameRoomDto[]> {
+    const room = await databases.gameRoom;
+    const mangoQuery = {
+      selector: {},
+    };
+    return (await room.find(mangoQuery)).docs as unknown as GameRoomDto[];
+  }
+
   async join(gameRoom: GameRoomDto): Promise<void> {
     const room = await databases.gameRoom;
     await room.insert(gameRoom);

@@ -33,6 +33,10 @@ class RoomService {
     return createdGameRoom;
   }
 
+  async getAll(): Promise<GameRoomDto[]> {
+    return await this.roomRepository.getAll();
+  }
+
   async join(
     joinInfo: IJoinGameRoomInfo,
     userId: string
@@ -45,6 +49,7 @@ class RoomService {
 
     // Check if user is already in a team
     if (
+
       roomToJoin.teamAPlayers.includes(userId) ||
       roomToJoin.teamBPlayers.includes(userId)
     )
