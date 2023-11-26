@@ -16,3 +16,8 @@ export interface IJoinGameRoomInfo {
   roomId: string;
   team: 'teamA' | 'teamB';
 }
+
+export interface gameRoomPoints {
+  teamAPoints: number;
+  teamBPoints: number;
+}

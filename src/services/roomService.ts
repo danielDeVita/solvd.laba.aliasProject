@@ -1,4 +1,5 @@
-import { GameRoom, IJoinGameRoomInfo } from '../interfaces/GameInterfaces';
+import { GameRoom, gameRoomPoints } from '../interfaces/GameInterfaces';
+import { IJoinGameRoomInfo } from '../interfaces/GameInterfaces';
 import { RoomRepository } from '../repositories/roomRepository';
 import roomRepository from '../repositories/roomRepository';
 import { CustomError } from '../helpers/CustomError';
@@ -95,7 +96,16 @@ class RoomService {
     gameRoom.updatedAt = new Date().toISOString();
     this.roomRepository.leave(gameRoom);
   }
-}
 
+  async updateEndGameRoomState(
+    roomId: string,
+    gameRoomPoints: gameRoomPoints
+  ): Promise<void> {
+    const gameRoom = await this.roomRepository.get(roomId);
+    gameRoom.teamAPoints = gameRoomPoints.teamAPoints;
+    gameRoom.teamBPoints = gameRoomPoints.teamBPoints;
+    await this.roomRepository.updateEndGameRoomState(gameRoom);
+  }
+}
 export default new RoomService(roomRepository);
 export { RoomService };
