@@ -35,6 +35,11 @@ class RoomRepository {
     const room = await databases.gameRoom;
     await room.insert(gameRoom);
   }
+
+  async updateEndGameRoomState(gameRoom: GameRoomDto): Promise<void>{
+    const room = await databases.gameRoom;
+    await room.insert(gameRoom);
+  }
 }
 export default new RoomRepository();
 export { RoomRepository };

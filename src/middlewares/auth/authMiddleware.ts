@@ -1,7 +1,7 @@
-import { Response, NextFunction } from "express";
-import jwt, { VerifyErrors } from "jsonwebtoken";
-import { CustomError } from "../../helpers/CustomError";
-import { DecodedToken } from "../../interfaces/IDecodedToken";
+import { Response, NextFunction } from 'express';
+import jwt, { VerifyErrors } from 'jsonwebtoken';
+import { CustomError } from '../../helpers/CustomError';
+import { DecodedToken } from '../../interfaces/IDecodedToken';
 
 export const authenticateToken = (
   //I didn't know what type to define on req without messing the code once I add 'user' to the req
@@ -10,10 +10,10 @@ export const authenticateToken = (
   next: NextFunction
 ) => {
   //grabs token from header
-  const token = req.header("Authorization")?.split(" ")[1];
+  const token = req.header('Authorization')?.split(' ')[1];
 
   if (!token) {
-    return next(new CustomError("Unauthorized: Missing token", 401));
+    return next(new CustomError('Unauthorized: Missing token', 401));
   }
 
   jwt.verify(
@@ -21,12 +21,14 @@ export const authenticateToken = (
     `${process.env.JWT_SECRET}`,
     (err: VerifyErrors | null, decoded: any | undefined) => {
       if (err) {
-        return next(new CustomError("Forbidden: Invalid token", 403));
+        return next(new CustomError('Forbidden: Invalid token', 403));
       }
 
       const decodedToken = decoded as DecodedToken;
 
       req.user = decodedToken;
+      req.headers.userId = decodedToken.email;
+      req.headers.userRole = decodedToken.role;
 
       next();
     }

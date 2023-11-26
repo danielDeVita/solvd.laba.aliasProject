@@ -1,9 +1,7 @@
-import Nano from 'nano';
-import 'dotenv/config';
+import Nano from "nano";
+import "dotenv/config";
 
-//I can't get my process.env.COUCH_URL file to work for some reason!
-const couchdbUrl =
-  process.env.COUCH_DB_URL || 'http://admin:1235813@localhost:5984';
+const couchdbUrl = `${process.env.COUCH_DB_URL}`;
 
 const couch = Nano(couchdbUrl);
 
@@ -11,6 +9,7 @@ const databases = {
   users: createDatabase('users'),
   gameRoom: createDatabase('gameroom'),
   messages: createDatabase('messages'), 
+
 };
 
 async function createDatabase(dbName: string) {
