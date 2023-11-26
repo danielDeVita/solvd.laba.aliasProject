@@ -7,7 +7,8 @@ import { chatSetup } from './chat/chat';
 import userRouter from './routes/userRoutes';
 import roomRouter from './routes/roomRoutes';
 import { expressErrorHandler } from './middlewares/errorHandlers/expressErrorHandler';
-import { authenticateToken } from "./middlewares/auth/authMiddleware";
+import { authenticateToken } from './middlewares/auth/authMiddleware';
+import { gameSetup } from './routes/socketRoutes/gameRoutes';
 
 const app = express();
 const port = 3000;
@@ -40,7 +41,7 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 chatSetup(io);
-
+gameSetup(io);
 
 server.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
