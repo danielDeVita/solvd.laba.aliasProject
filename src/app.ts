@@ -24,8 +24,8 @@ app.use("/chat", chatRouter);
 
 chatSetup(
   new Server(
-    app.listen(3001, () => {
-      console.log(`Chat server is running on http://localhost:3001`);
+    app.listen(process.env.CHAT_PORT, () => {
+      console.log(`Chat server is running on http://localhost:${process.env.CHAT_PORT}`);
     })
   )
 );
