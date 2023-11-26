@@ -41,7 +41,7 @@ export const getUniqueWord = (wordsArray: string[]): string => {
 
     // If here, the word is unique, we can leave do while loop
     newWordFound = true;
-  } while (newWordFound == false);
+  } while (newWordFound === false);
 
   return actualWord.toLowerCase();
 };
