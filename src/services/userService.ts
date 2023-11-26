@@ -12,9 +12,9 @@ export const registerUserService = async (userData: UserDto) => {
   if (existingUser) {
     throw new CustomError("User already exists", 409);
   }
-
+  console.log("here");
   const hashedPassword = await bcrypt.hash(password, 10);
-
+  console.log("now here");
   const user: UserDto = {
     email,
     firstName,
