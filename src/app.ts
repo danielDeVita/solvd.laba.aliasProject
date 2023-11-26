@@ -7,7 +7,7 @@ import { chatSetup } from './chat/chat';
 import userRouter from './routes/userRoutes';
 import roomRouter from './routes/roomRoutes';
 import { expressErrorHandler } from './middlewares/errorHandlers/expressErrorHandler';
-
+import { authenticateToken } from "./middlewares/auth/authMiddleware";
 
 const app = express();
 const port = 3000;
@@ -19,6 +19,20 @@ app.use('/', indexRouter);
 app.use('/chat', chatRouter);
 app.use('/user', userRouter);
 app.use('/room', roomRouter);
+app.use("/", indexRouter);
+app.use("/chat", chatRouter);
+
+chatSetup(
+  new Server(
+    app.listen(3001, () => {
+      console.log(`Chat server is running on http://localhost:3001`);
+    })
+  )
+);
+
+app.use("/user", userRouter);
+app.use("/room", authenticateToken, roomRouter);
+
 app.use(expressErrorHandler);
 
 const server = http.createServer(app);
