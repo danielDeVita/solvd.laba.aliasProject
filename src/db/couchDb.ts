@@ -6,8 +6,10 @@ const couchdbUrl = `${process.env.COUCH_DB_URL}`;
 const couch = Nano(couchdbUrl);
 
 const databases = {
-  users: createDatabase("users"),
-  gameRoom: createDatabase("gameroom"),
+  users: createDatabase('users'),
+  gameRoom: createDatabase('gameroom'),
+  messages: createDatabase('messages'), 
+
 };
 
 async function createDatabase(dbName: string) {
