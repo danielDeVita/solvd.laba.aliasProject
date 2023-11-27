@@ -9,6 +9,7 @@ import roomRouter from './routes/roomRoutes';
 import { expressErrorHandler } from './middlewares/errorHandlers/expressErrorHandler';
 import { authenticateToken } from './middlewares/auth/authMiddleware';
 import { gameSetup } from './routes/socketRoutes/gameRoutes';
+import 'dotenv/config';
 
 const app = express();
 
