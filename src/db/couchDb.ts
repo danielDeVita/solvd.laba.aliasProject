@@ -1,15 +1,17 @@
-import Nano from "nano";
-import "dotenv/config";
+import Nano from 'nano';
+import 'dotenv/config';
 
-const couchdbUrl = `${process.env.COUCH_DB_URL}`;
+const couchdbUrl =
+  (process.env.NODE_ENV == 'dev'
+    ? process.env.COUCH_DB_URL
+    : process.env.COUCH_DOCKER_DB_URL) || `http://admin:1235813@localhost:5984`;
 
 const couch = Nano(couchdbUrl);
 
 const databases = {
   users: createDatabase('users'),
   gameRoom: createDatabase('gameroom'),
-  messages: createDatabase('messages'), 
-
+  messages: createDatabase('messages'),
 };
 
 async function createDatabase(dbName: string) {
