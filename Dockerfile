@@ -6,8 +6,11 @@ ENV NODE_ENV=production
 
 COPY . /home/app
 WORKDIR /home/app
-RUN rm -rf node_modules && npm install
 
+## node_modules are deleted and reinstalled as
+## bcrypt module needs to be installed on the host,
+## other wise it will have missing dependencies
+RUN rm -rf node_modules && npm install
 
 EXPOSE 3000
 
