@@ -1,1 +1,3 @@
-export const onlineUsers: Map<string, { username: string; roomId: string }> = new Map(); // socket ID, {userName, roomId}
+import { IPlayerReadyInfo } from "../../interfaces/GameInterfaces";
+
+export const onlineUsers: Map<string, IPlayerReadyInfo> = new Map(); // socket ID, {userName, roomId}

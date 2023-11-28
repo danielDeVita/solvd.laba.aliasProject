@@ -1,5 +1,4 @@
 import { Socket } from 'socket.io';
-import { onlineUsers } from '../../repositories/inMemory/onlineUsers';
 import { rooms } from '../../repositories/inMemory/rooms';
 import { IPlayerReadyInfo } from '../../interfaces/GameInterfaces';
 import { GameRoomDto } from '../../dtos/GameRoomDto';
@@ -60,12 +59,7 @@ export const playerReady = (socket: Socket) => {
         rooms.set(body.roomId, gameState);
       }
 
-      // adding user to the onlineUsers, this onlineUsers allows us
-      // to track the user information, just knowing his socket id.
-      onlineUsers.set(socket.id, {
-        username: body.username,
-        roomId: body.roomId, 
-      });
+     
 
       // Sending message to everyone that this user joined
       socket
