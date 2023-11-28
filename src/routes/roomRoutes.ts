@@ -10,6 +10,6 @@ router.post('/', validateReqBody(gameRoomSchema), roomController.create);
 router.get('/:id', roomController.get);
 router.get('/', roomController.getAll);
 
-router.patch('/', validateReqBody(gameJoinRoomSchema), roomController.join);
+router.patch('/:id', validateReqBody(gameJoinRoomSchema), roomController.join);
 
 export default router;
