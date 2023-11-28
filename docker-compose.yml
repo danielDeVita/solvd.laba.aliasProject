@@ -28,6 +28,9 @@ networks:
 volumes:
   volume-1:
 
+# for composing app
+## npm run compose
+
 # if you need a couchDB for dev mode, you can create one
 ## docker run --name couchDB -p5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=1235813 couchdb:3.3.2 -d
 
