@@ -37,7 +37,7 @@ export const sendHint = (socket: Socket, io: Server) => {
               }
           });
           // show everyone the hint
-          io.emit('show-hint', `${userInfo.username} hinted: ${body.hint}`);
+          io.to(userInfo.roomId).emit('show-hint', `${userInfo.username} hinted: ${body.hint}`);
         } 
       }
     } catch (err) {
