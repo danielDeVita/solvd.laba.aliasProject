@@ -1,11 +1,14 @@
-import { IJoinGameRoomInfo } from '../../../interfaces/GameInterfaces';
-import { JSONSchemaType } from 'ajv';
+import { IJoinGameRoomInfo } from "../../../interfaces/GameInterfaces";
+import { JSONSchemaType } from "ajv";
 
 export const gameJoinRoomSchema: JSONSchemaType<IJoinGameRoomInfo> = {
-  type: 'object',
+  type: "object",
   properties: {
-    roomId: { type: 'string' },
-    team: { type: 'string', enum: ['teamA', 'teamB'] },
+    roomId: { type: "string" },
+    team: { type: "string", enum: ["teamA", "teamB"] },
   },
-  required: ['roomId', 'team'],
+  required: ["team"],
+  not: {
+    required: ["roomId"],
+  },
 };

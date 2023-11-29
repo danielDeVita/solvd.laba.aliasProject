@@ -1,6 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
-import { RoomService } from '../services/roomService';
-import roomService from '../services/roomService';
+import { Request, Response, NextFunction } from "express";
+import { RoomService } from "../services/roomService";
+import roomService from "../services/roomService";
+import { IJoinGameRoomInfo } from "../interfaces/GameInterfaces";
 
 class RoomController {
   private roomService: RoomService;
@@ -56,16 +57,20 @@ class RoomController {
     } catch (error) {
       next(error);
     }
-  }
-
+  };
 
   /**
    * Join a game room by an id and a specified team
    */
   join = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const joinInfo: IJoinGameRoomInfo = {
+        team: req.body.team,
+        roomId: req.params.id,
+      };
+
       const roomToJoin = await this.roomService.join(
-        req.body,
+        joinInfo,
         req.headers.userId as string
       );
       res.status(200).json(roomToJoin);
