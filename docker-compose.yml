@@ -2,17 +2,37 @@ version: '4.23.0'
 services:
   Database:
     image: couchdb:3.3.2
+    networks:
+      - appnet
     container_name: couchdb
     environment:
       COUCHDB_USER: ${COUCHDB_USER:-admin}
       COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:-1235813}
+    volumes:
+      - "volume-1:/opt/couchdb/data"
+  app:
+    build: .
     ports:
-      - '5984:5984'
+      - '3000:3000'
+    depends_on:
+      - Database
+    networks:
+      - appnet
+    environment:
+      COUCH_DOCKER_DB_URL: ${COUCH_DOCKER_DB_URL}
 
-# volume do not created in purpose, in order to be easier to test in the first dev steps
+networks:
+  appnet:
+    driver: bridge
 
-# for building the docker container use:
-## docker compose up -d
+volumes:
+  volume-1:
+
+# for composing app
+## npm run compose
+
+# if you need a couchDB for dev mode, you can create one
+## docker run --name couchDB -p5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=1235813 couchdb:3.3.2 -d
 
 # for entering the database user interface go to:
 ## http://localhost:5984/_utils/
