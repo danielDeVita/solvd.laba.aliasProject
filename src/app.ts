@@ -3,13 +3,14 @@ import indexRouter from './routes/index';
 import chatRouter from './routes/chat';
 import { Server } from 'socket.io';
 import http from 'http';
-import { chatSetup } from './chat/chat';
+import { chatSetup } from './routes/socketRoutes/chatRoutes';
 import userRouter from './routes/userRoutes';
 import roomRouter from './routes/roomRoutes';
 import { expressErrorHandler } from './middlewares/errorHandlers/expressErrorHandler';
 import { authenticateToken } from './middlewares/auth/authMiddleware';
 import { gameSetup } from './routes/socketRoutes/gameRoutes';
 import 'dotenv/config';
+import { authSocket } from './middlewares/auth/authSocket';
 
 const app = express();
 
@@ -34,6 +35,7 @@ const server = http.createServer(app);
 
 const io = new Server(server);
 
+io.use(authSocket);
 chatSetup(io);
 gameSetup(io);
 
