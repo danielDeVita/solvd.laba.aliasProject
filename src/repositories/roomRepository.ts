@@ -1,6 +1,6 @@
 import { GameRoomDto } from '../dtos/GameRoomDto';
 import { databases } from '../db/couchDb';
-
+import { MangoQuery } from 'nano';
 
 class RoomRepository {
   async create(gameRoom: GameRoomDto): Promise<void> {
@@ -36,9 +36,35 @@ class RoomRepository {
     await room.insert(gameRoom);
   }
 
-  async updateEndGameRoomState(gameRoom: GameRoomDto): Promise<void>{
+  async updateEndGameRoomState(gameRoom: GameRoomDto): Promise<void> {
     const room = await databases.gameRoom;
     await room.insert(gameRoom);
+  }
+
+  async getByUserId(userId: string) {
+    const room = await databases.gameRoom;
+
+    const mangoQuery: MangoQuery = {
+      selector: {
+        $or: [
+          {
+            teamAPlayers: {
+              $elemMatch: {
+                $eq: userId,
+              },
+            },
+          },
+          {
+            teamBPlayers: {
+              $elemMatch: {
+                $eq: userId,
+              },
+            },
+          },
+        ],
+      },
+    };
+    return (await room.find(mangoQuery)).docs as unknown as GameRoomDto[];
   }
 }
 export default new RoomRepository();

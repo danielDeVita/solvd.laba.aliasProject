@@ -1,7 +1,8 @@
-import { Request, Response, NextFunction } from "express";
-import { RoomService } from "../services/roomService";
-import roomService from "../services/roomService";
-import { IJoinGameRoomInfo } from "../interfaces/GameInterfaces";
+import { Request, Response, NextFunction } from 'express';
+import { RoomService } from '../services/roomService';
+import roomService from '../services/roomService';
+import { IJoinGameRoomInfo } from '../interfaces/GameInterfaces';
+import { CustomError } from '../helpers/CustomError';
 
 class RoomController {
   private roomService: RoomService;
@@ -74,6 +75,34 @@ class RoomController {
         req.headers.userId as string
       );
       res.status(200).json(roomToJoin);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  getByUserId = async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.params.userId;
+    const order = req.query.order || 'asc';
+    const pageOffset = Number(req.query.pageOffset) || 0;
+    const pages = Number(req.query.pages) || 10;
+
+    try {
+      if (typeof userId != 'string')
+        throw new CustomError('Invalid userId', 400);
+
+      if (!(order == 'asc' || order == 'desc'))
+        throw new CustomError('Order must be "asc" or "desc"', 400);
+
+      if (!(pageOffset >= 0) || !(pages >= 0))
+        throw new CustomError('pageOffset and pages must be >= 0', 400);
+
+      const rooms = await this.roomService.getByUserId(
+        userId,
+        order,
+        pageOffset,
+        pages
+      );
+      res.status(200).json(rooms);
     } catch (error) {
       next(error);
     }

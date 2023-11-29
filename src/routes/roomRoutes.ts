@@ -9,6 +9,7 @@ const router: Router = express.Router();
 router.post('/', validateReqBody(gameRoomSchema), roomController.create);
 router.get('/:id', roomController.get);
 router.get('/', roomController.getAll);
+router.get('/user/:userId', roomController.getByUserId)
 
 router.patch('/:id', validateReqBody(gameJoinRoomSchema), roomController.join);
 
