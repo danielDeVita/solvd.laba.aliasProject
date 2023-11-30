@@ -31,7 +31,7 @@ app.use('/room', authenticateToken, roomRouter);
 
 app.use(expressErrorHandler);
 
-const server = http.createServer(app);
+export const server = http.createServer(app);
 
 const io = new Server(server);
 
