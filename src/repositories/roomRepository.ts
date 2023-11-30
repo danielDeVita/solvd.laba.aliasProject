@@ -1,6 +1,8 @@
 import { GameRoomDto } from '../dtos/GameRoomDto';
 import { databases } from '../db/couchDb';
 import { MangoQuery } from 'nano';
+import { IGameRoom } from '../interfaces/IGameRoom';
+import { StoredGameRoomDto } from '../dtos/StoredRoom';
 
 class RoomRepository {
   async create(gameRoom: GameRoomDto): Promise<void> {
@@ -8,22 +10,27 @@ class RoomRepository {
     await room.insert(gameRoom);
   }
 
-  async get(roomId: string): Promise<GameRoomDto> {
+  async get(roomId: string): Promise<StoredGameRoomDto> {
     const room = await databases.gameRoom;
     const mangoQuery = {
       selector: {
         _id: `${roomId}`,
       },
     };
-    return (await room.find(mangoQuery)).docs[0] as unknown as GameRoomDto;
+    const storedRoom = (await room.find(mangoQuery)).docs[0] as IGameRoom;
+    const gameRoomDto = new StoredGameRoomDto(storedRoom);
+    return gameRoomDto;
   }
 
-  async getAll(): Promise<GameRoomDto[]> {
+  async getAll(): Promise<StoredGameRoomDto[]> {
     const room = await databases.gameRoom;
     const mangoQuery = {
       selector: {},
     };
-    return (await room.find(mangoQuery)).docs as unknown as GameRoomDto[];
+    const rooms = ((await room.find(mangoQuery)).docs as IGameRoom[]).map(
+      (storedGameRoom) => new StoredGameRoomDto(storedGameRoom)
+    );
+    return rooms;
   }
 
   async join(gameRoom: GameRoomDto): Promise<void> {
