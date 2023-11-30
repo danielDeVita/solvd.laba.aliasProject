@@ -50,7 +50,6 @@ class RoomService {
 
     // Check if user is already in a team
     if (
-
       roomToJoin.teamAPlayers.includes(userId) ||
       roomToJoin.teamBPlayers.includes(userId)
     )
@@ -110,6 +109,28 @@ class RoomService {
     gameRoom.teamAPoints = gameRoomPoints.teamAPoints;
     gameRoom.teamBPoints = gameRoomPoints.teamBPoints;
     await this.roomRepository.updateEndGameRoomState(gameRoom);
+  }
+
+  async getByUserId(
+    userId: string,
+    order: 'asc' | 'desc',
+    pageOffset: number,
+    pages: number
+  ) {
+    const rooms = await this.roomRepository.getByUserId(userId);
+
+    const ordering = order == 'asc' ? 1 : -1;
+
+    const sortedRooms = rooms.sort(
+      (a: GameRoomDto, b: GameRoomDto) =>
+        ordering * Number(new Date(a.createdAt)) -
+        ordering * Number(new Date(b.createdAt))
+    );
+
+    return sortedRooms.slice(
+      Number(pageOffset),
+      Number(pageOffset) + Number(pages)
+    );
   }
 }
 export default new RoomService(roomRepository);
