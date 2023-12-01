@@ -24,7 +24,7 @@ class RoomService {
     );
 
     await this.roomRepository.create(createdGameRoom);
-
+      
     return await this.roomRepository.get(createdGameRoom._id);
   }
 
