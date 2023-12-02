@@ -28,4 +28,4 @@ jobs:
       #   run: npm test
 
       - name: Check CouchDB Connection
-        run: curl http://admin:1235813@localhost:5984
+        run: curl http://localhost:5984
