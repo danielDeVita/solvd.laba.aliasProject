@@ -1,4 +1,4 @@
-/* import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import ChatMessageController from '../controllers/chatMessageController';
 import chatMessageService from '../services/chatMessageService';
 
@@ -148,4 +148,4 @@ describe('ChatMessageController', () => {
       expect(res.json).not.toHaveBeenCalled();
     });
   });
-}); */
+});

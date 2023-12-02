@@ -1,4 +1,4 @@
-/* import { disconnect } from '../services/chat/disconnect';
+import { disconnect } from '../services/chat/disconnect';
 import { joinRoom } from '../services/chat/joinRoom';
 import { leaveRoom } from '../services/chat/leaveRoom';
 import { sendMessage } from '../services/chat/sendMessage';
@@ -184,4 +184,4 @@ describe('sendMessage function', () => {
     expect(mockIO.to).not.toHaveBeenCalled();
     expect(mockIO.emit).not.toHaveBeenCalled();
   });
-}); */
+});
