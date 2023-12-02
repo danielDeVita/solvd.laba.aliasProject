@@ -42,6 +42,7 @@ export const playerReady = (socket: Socket) => {
           wordsHistory: [],
           currentPlayer: '',
           finishedTurns: 0,
+          hinted: false,
         });
       }
       // getting the room where user want to join

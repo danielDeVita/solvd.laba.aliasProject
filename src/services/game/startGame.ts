@@ -56,7 +56,7 @@ export const startGame = (socket: Socket, io: Server) => {
 
         // Logic for word stealing (Opposite team can try to guess last word if it wasn't guessed yet)
         const stealWord = () => {
-          if (!gameState.wordGuessed) {
+          if (!gameState.wordGuessed && gameState.hinted) {
 
             // pauses turn change
             clearInterval(turnChanger);
