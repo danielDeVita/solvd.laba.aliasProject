@@ -71,5 +71,5 @@ export const guessWord = (socket: Socket, io: Server) => {
     } catch (err) {
       socketErrorHandler(socket, (err as CustomError));
     }
-  }
+  };
 };

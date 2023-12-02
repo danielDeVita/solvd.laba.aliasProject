@@ -161,7 +161,7 @@ describe('Testing room routes', () => {
 
   it('Get / should return all rooms', async () => {
     const res = await request(server)
-      .get(`/room/`)
+      .get('/room/')
       .set('Authorization', `Bearer: ${authToken1}`)
       .expect(200);
 

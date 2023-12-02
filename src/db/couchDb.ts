@@ -4,7 +4,7 @@ import 'dotenv/config';
 const couchdbUrl =
   (process.env.NODE_ENV == 'dev' || process.env.NODE_ENV == 'test'
     ? process.env.COUCH_DB_URL
-    : process.env.COUCH_DOCKER_DB_URL) || `http://admin:admin@localhost:5984`;
+    : process.env.COUCH_DOCKER_DB_URL) || 'http://admin:admin@localhost:5984';
 
 const couch = Nano(couchdbUrl);
 

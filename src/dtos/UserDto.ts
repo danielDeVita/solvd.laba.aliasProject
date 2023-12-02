@@ -1,11 +1,11 @@
-import { IUser } from "../interfaces/IUser";
+import { IUser } from '../interfaces/IUser';
 
 export class UserDto implements Partial<IUser> {
   email: string;
   password: string; //I changed the field to 'password'
   firstName: string;
   lastName: string;
-  role: "user" | "admin" | "inactive";
+  role: 'user' | 'admin' | 'inactive';
   createdAt: string;
   updatedAt: string;
 

@@ -41,7 +41,7 @@ export const sendHint = (socket: Socket, io: Server) => {
         } 
       }
     } catch (err) {
-      socketErrorHandler(socket, err as CustomError)
+      socketErrorHandler(socket, err as CustomError);
     }
   };
 };

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import chatMessageService, { ChatMessageService } from "../services/chatMessageService";
+import chatMessageService, { ChatMessageService } from '../services/chatMessageService';
 
 class ChatMessageController {
   private chatMessageService: ChatMessageService;
@@ -46,7 +46,7 @@ class ChatMessageController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
   getByRoomId = async (
     req: Request,
@@ -59,7 +59,7 @@ class ChatMessageController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 }
 
 export default new ChatMessageController(chatMessageService);

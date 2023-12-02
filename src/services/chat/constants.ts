@@ -1,1 +1,1 @@
-export const ROOM_SUFFIX = "chatRoom"
+export const ROOM_SUFFIX = 'chatRoom';

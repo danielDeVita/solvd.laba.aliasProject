@@ -1,4 +1,4 @@
-import { ChatMessageDto } from "../dtos/ChatMessageDto";
+import { ChatMessageDto } from '../dtos/ChatMessageDto';
 import { databases } from '../db/couchDb';
 
 export class MessageRepository {

@@ -1,7 +1,7 @@
-import { registerUserService, loginUserService } from "../services/userService";
-import { Request, Response, NextFunction } from "express";
-import { UserDto } from "../dtos/UserDto";
-import { validationResult } from "express-validator";
+import { registerUserService, loginUserService } from '../services/userService';
+import { Request, Response, NextFunction } from 'express';
+import { UserDto } from '../dtos/UserDto';
+import { validationResult } from 'express-validator';
 
 export const registerUser = async (
   req: Request,

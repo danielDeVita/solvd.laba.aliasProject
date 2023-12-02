@@ -71,7 +71,7 @@ export const startGame = (socket: Socket, io: Server) => {
                 gameState.roundTime * 1000
               );
               clearInterval(endSteal);
-            }, 30000) // gives the other team 30 seconds
+            }, 30000); // gives the other team 30 seconds
 
             // Interval for checking if the word was guessed and the "steal" phase should end
             const endSteal = setInterval(() => {
@@ -93,7 +93,7 @@ export const startGame = (socket: Socket, io: Server) => {
           } else { // if word was guessed, there is no steal phase
             turnChangerLogic();
           }
-        }
+        };
 
         // Calls the logic the first time, so we not wait for the first
         // set interval to happen
@@ -118,5 +118,5 @@ export const startGame = (socket: Socket, io: Server) => {
     } catch (err) {
       socketErrorHandler(socket, err as CustomError);
     }
-  }
+  };
 };

@@ -21,7 +21,7 @@ export const gameSetup = (io: Server) => {
 		socket.on('guess-word', guessWord(socket, io));
 
 		// Send a hint
-		socket.on('send-hint', sendHint(socket, io))
+		socket.on('send-hint', sendHint(socket, io));
 
 	});
-}
+};

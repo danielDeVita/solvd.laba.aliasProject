@@ -1,8 +1,8 @@
-import messageRepository, { MessageRepository } from "../repositories/messageRepository";
-import { ChatMessageDto } from "../dtos/ChatMessageDto";
+import messageRepository, { MessageRepository } from '../repositories/messageRepository';
+import { ChatMessageDto } from '../dtos/ChatMessageDto';
 import { v4 as uuid } from 'uuid';
-import { CustomError } from "../helpers/CustomError";
-import { IChatMessage } from "../interfaces/IChatMessage";
+import { CustomError } from '../helpers/CustomError';
+import { IChatMessage } from '../interfaces/IChatMessage';
 
 export class ChatMessageService{
   private messageRepository: MessageRepository;
@@ -18,7 +18,7 @@ export class ChatMessageService{
       roomId: chatMessage.roomId,
       createdBy: chatMessage.createdBy,
       createdAt: new Date().toISOString()
-    }
+    };
     
     await this.messageRepository.create(newMessage);
 

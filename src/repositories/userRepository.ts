@@ -1,7 +1,7 @@
-import { databases } from "../db/couchDb";
-import { IUser } from "../interfaces/IUser";
-import { UserDto } from "../dtos/UserDto";
-import Nano from "nano";
+import { databases } from '../db/couchDb';
+// import { IUser } from '../interfaces/IUser';
+import { UserDto } from '../dtos/UserDto';
+import Nano from 'nano';
 
 export const createUser = async (userDto: UserDto) => {
   const {

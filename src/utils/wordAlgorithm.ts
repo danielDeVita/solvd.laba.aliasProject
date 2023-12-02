@@ -1,11 +1,11 @@
-import natural from "natural";
+import natural from 'natural';
 
 export class WordChecker {
   private actualWord: string;
   private guess: string;
 
   constructor(actualWord: string, guess: string) {
-    if (!actualWord || !guess) throw new Error("Please provide both words.");
+    if (!actualWord || !guess) throw new Error('Please provide both words.');
 
     this.actualWord = actualWord.toLowerCase().trim();
     this.guess = guess.toLowerCase().trim();
