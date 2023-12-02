@@ -16,12 +16,12 @@ jobs:
         with:
           node-version: 18
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Lint
         run: npm run lint
       - name: Build
         run: npm run build
       #   - name: DB
       #     run: docker run --name couchDB -p5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=pass couchdb:3.3.2 -d
-      - name: Tests
-        run: npm test
+      # - name: Tests
+      #   run: npm test

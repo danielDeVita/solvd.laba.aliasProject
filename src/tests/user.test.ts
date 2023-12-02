@@ -1,10 +1,5 @@
 import { server } from '../app';
 import request from 'supertest';
-// import Nano from 'nano';
-
-// const couchdbUrl = `${process.env.COUCH_DB_URL}`;
-
-// const couch = Nano(couchdbUrl);
 
 beforeAll(async () => {});
 
@@ -13,7 +8,7 @@ afterAll(async () => {
   server.close();
 });
 
-const randomEmail = `${Date.now()}@mail.com`; //to skio unique email validation
+const randomEmail = `${Date.now()}@mail.com`; //to skip unique email validation
 
 const userToRegisterOK = {
   email: randomEmail,
