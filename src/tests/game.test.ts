@@ -5,6 +5,9 @@ import { disconnect } from '../services/game/disconnect';
 import { rooms } from '../repositories/inMemory/rooms';
 import { guessWord } from '../services/game/guessWord';
 import { sendHint } from '../services/game/sendHint';
+import { playerReady } from '../services/game/playerReady';
+import request from 'supertest';
+import { server } from '../../src/app';
 
 // Creating mocked socket
 const mockedSocket1Id = 'someSockedId1';
@@ -12,11 +15,8 @@ const mockedSocket2Id = 'someSockedId2';
 const mockedSocket3Id = 'someSockedId3';
 const mockedSocket4Id = 'someSockedId4';
 
-const roomId = 'someRoomId';
-const mockedUserInfo = {
-  username: 'someUserName',
-  roomId: roomId,
-};
+let roomId: string;
+let mockedUserInfo: any;
 let mockedSocket1: any;
 let mockedSocket2: any;
 let mockedSocket3: any;
@@ -28,12 +28,18 @@ let mockedIO: any;
 let mockedRoom: GameState;
 
 beforeEach(async () => {
+  roomId = 'someRoomId';
+  mockedUserInfo = {
+    username: 'someUserName@gmail.com',
+    roomId: roomId,
+  };
   // Creates mocked sockets
   mockedSocket1 = {
     id: mockedSocket1Id,
     leave: jest.fn(),
     to: jest.fn(() => mockedSocket1),
     emit: jest.fn(),
+    join: jest.fn(),
   };
   mockedSocket2 = {
     id: mockedSocket2Id,
@@ -97,6 +103,10 @@ afterEach(() => {
   rooms.clear();
 });
 
+afterAll(async () => {
+  server.close();
+});
+
 describe('Test disconnect callback', () => {
   it('Should disconnect user from room and online users', () => {
     const disconnectHandler = disconnect(mockedSocket1);
@@ -114,6 +124,13 @@ describe('Test disconnect callback', () => {
     expect(onlineUsers.has(mockedSocket1.id)).toBeFalsy();
     // Expect socket to be deleted from his team
     expect(rooms.get(roomId)?.teamAPlayers.has(mockedSocket1.id)).toBeFalsy();
+  });
+
+  it('Should disconnect user if in teamB', () => {
+    const disconnectHandler = disconnect(mockedSocket3);
+    disconnectHandler();
+
+    expect(onlineUsers.has(mockedSocket3.id)).toBeFalsy();
   });
 });
 
@@ -186,5 +203,69 @@ describe('Testing sendHint callback', () => {
 
     expect(mockedIO.to).not.toHaveBeenCalled();
     expect(mockedIO.emit).not.toHaveBeenCalled();
+  });
+});
+
+describe('Testing playerReady callback', () => {
+  it('Should set a player as ready into teamA', async () => {
+    // Create user and store into db
+    const user = {
+      email: mockedUserInfo.username,
+      password: 'password',
+      firstName: 'firstName',
+      lastName: 'lastName',
+      role: 'user',
+    };
+    await request(server).post('/user/register').send(user);
+
+    // Login user and get token
+    const loginUserRes = await request(server)
+      .post('/user/login')
+      .send({
+        email: user.email,
+        password: user.password,
+      })
+      .expect(200);
+
+    // Create room
+    const roomToCreate = {
+      teamNumberOfPlayers: mockedRoom.teamNumberOfPlayers,
+      roundTime: mockedRoom.roundTime,
+      roundsToPlay: mockedRoom.roundsToPlay,
+    };
+    const createdRoomRes = await request(server)
+      .post('/room')
+      .send(roomToCreate)
+      .set('Authorization', `Bearer: ${loginUserRes.body.token}`)
+      .expect(201);
+
+    // update mockedRoom id to match one stored in db
+    mockedRoom._id = createdRoomRes.body._id;
+    mockedUserInfo.roomId = createdRoomRes.body._id;
+
+    // join user to room
+    await request(server)
+      .patch(`/room/${mockedUserInfo.roomId}`)
+      .set('Authorization', `Bearer: ${loginUserRes.body.token}`)
+      .send({ team: 'teamA' })
+      .expect(200);
+
+    const playerReadyHandler = playerReady(mockedSocket1);
+    await playerReadyHandler();
+
+    expect(mockedSocket1.join).toHaveBeenCalledWith(mockedUserInfo.roomId);
+    expect(mockedSocket1.to).toHaveBeenCalledWith(mockedUserInfo.roomId);
+    expect(mockedSocket1.emit).toHaveBeenCalledWith(
+      'new-room-join',
+      `${mockedUserInfo.username} has joined the room.`
+    );
+  });
+
+  it('Should not set a player as ready if he did not join to a match', async () => {
+    const playerReadyHandler = playerReady(mockedSocket2);
+    await playerReadyHandler();
+
+    expect(mockedSocket1.to).not.toHaveBeenCalled();
+    expect(mockedSocket1.emit).not.toHaveBeenCalled();
   });
 });
