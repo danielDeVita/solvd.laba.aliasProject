@@ -21,16 +21,9 @@ jobs:
         run: npm ci
       - name: Lint
         run: npm run lint
-      - name: Build
-        run: npm run build
+      - name: Tests inside container for testing
+        run: docker compose -f docker-compose.test.yml 
       
-      - name: Start
-        run: npm start
 
-      - name: Connect to DB
-        run: docker run --name couchDB -p5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=admin couchdb:3.3.2 -d  
-      # - name: Check connection to DB
-      #   run: curl http://localhost:5984  
 
-      # - name: Tests
-      #   run: npm test
+
