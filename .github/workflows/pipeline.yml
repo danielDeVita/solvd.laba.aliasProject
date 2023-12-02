@@ -17,11 +17,6 @@ jobs:
         with:
           node-version: 18
 
-      
-      # - name: Connect to DB
-      #   run: docker run --name couchDB -p5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=admin couchdb:3.3.2 -d 
-        
-
       - name: Install dependencies
         run: npm ci
       - name: Lint
@@ -29,8 +24,11 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Check connection to DB
-        run: curl http://localhost:5984  
+
+      - name: Connect to DB
+        run: docker run --name couchDB -p5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=admin couchdb:3.3.2 -d  
+      # - name: Check connection to DB
+      #   run: curl http://localhost:5984  
 
       # - name: Tests
       #   run: npm test
