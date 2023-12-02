@@ -23,7 +23,8 @@ jobs:
         run: npm run lint
       - name: Tests inside container for testing
         run: docker compose -f docker-compose.test.yml 
-      
+      - name: Log Message
+        run: echo "Tests inside Docker container have completed successfully."
 
 
 
