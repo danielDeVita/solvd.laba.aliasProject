@@ -23,7 +23,9 @@ jobs:
         run: npm run lint
       - name: Build
         run: npm run build
-
+      
+      - name: Start
+        run: npm start
 
       - name: Connect to DB
         run: docker run --name couchDB -p5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=admin couchdb:3.3.2 -d  
