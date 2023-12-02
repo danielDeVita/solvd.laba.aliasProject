@@ -15,3 +15,5 @@ RUN rm -rf node_modules && npm install && npx tsc
 EXPOSE 3000
 
 CMD ["npm", "test"]
+
+RUN echo 'after tests'
