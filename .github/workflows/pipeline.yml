@@ -16,9 +16,9 @@ jobs:
         with:
           node-version: 18
 
-      - uses: "cobot/couchdb-action@master"
+      - uses: iamssen/couchdb-github-action@master
         with:
-          couchdb version: "3.3.2"
+          couchdb-version: 3
 
       - name: Install dependencies
         run: npm ci
