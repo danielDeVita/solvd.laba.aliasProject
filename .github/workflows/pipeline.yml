@@ -17,6 +17,12 @@ jobs:
         with:
           node-version: 18
 
+      - uses: "cobot/couchdb-action@master"
+        with:
+            couchdb version: '2.3.1'
+      - name: Check connection to DB
+        run: curl http://localhost:5984      
+
       - name: Install dependencies
         run: npm ci
       - name: Lint
@@ -28,8 +34,4 @@ jobs:
       #   run: npm test
 
      
-      - uses: "cobot/couchdb-action@master"
-        with:
-          couchdb version: '2.3.1'
-      - name: Do something
-        run: curl http://localhost:5984  
+      
