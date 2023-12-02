@@ -21,11 +21,9 @@ This repository contains the final project for SOLVD's Node.js development cours
 -  [Socket Events](#socket-events)
     - [Chat events](#chat-events)
     - [Game events](#game-events)
-- ~~[Testing](#testing)~~
-- ~~[Deployment](#deployment)~~
-- ~~[Future Enhancements](#future-enhancements)~~
-- ~~[FAQ](#faq)~~
-- ~~[Conclusion](#Conclusion)~~
+- [Testing](#testing)
+- [CI/CD](#cicd)
+- [FAQ](#faq)
 
 ---
 
@@ -460,16 +458,32 @@ A user sends a hint to help his teammates guess the word. Event message should l
 }
 ```
 
-## Testing  
-  
-  
-## Deployment  
+#### `start-room-game`
 
+The game begins. Event message should look like:
+```json
+{
+    "roomId": "{{roomId}}"
+}
+```
+
+## Testing  
+
+This project uses jest for unit testing, to run said tests execute `npm test`
   
-## Future Enhancements  
-  
+## CI/CD  
+This repository uses GitHub actions for continuous integration. This action builds, tests and lints the project's code. The workflow file can be fount in `.github/workflows/pipeline.yml`
   
 ## FAQ  
 
+- **How do I start a game?**
   
-## Conclusion  
+  To start a game you must first posses a user, you can create a new one through the [register](#post-userregister) functionality. Once you are a valid user, you must [log in](#post-userlogin) to obtain you JWT authentication token (Remember you must include this token in all HTTP request and Socket events as a header). The next step is to [create a room](#post-room), indicating the configuration for your game. Now all you have to do is wait for  other users to [join your room](#patch-roomid), once both teams have at least 2 members and everyone has sent the [ready socket event](#ready), the [start game socket event](#start-room-game) can be sent and the game will begin!
+
+- **What happens if my team does't guess a word?**
+
+  If your team hasn't guessed a particular word before the time runs out *and a hint for that word has already been sent* the other team will get 30 seconds to try and guess that same word using the hints your teammate has already sent. Once they guess the word or the 30 seconds are up, their normal turn will begin.
+  
+- **Why isn't my game starting?**
+
+  Make sure you created the room with all the correct configurations, also check that the roomId fellow teammates are using to join the room is correct. Remember at least 2 players of each team mush emit the [ready socket event](#ready) to start the game.
