@@ -3,7 +3,7 @@ import { GameRoomDto } from '../../dtos/GameRoomDto';
 import roomService from '../../services/roomService';
 import { server } from '../../app';
 import request from 'supertest';
-import Nano from 'nano';
+// import Nano from 'nano';
 
 
 const randomEmail1 = `EMAIL_1${Date.now()}@mail.com`; //to skip unique email validation
