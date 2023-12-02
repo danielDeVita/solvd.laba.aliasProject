@@ -18,8 +18,8 @@ jobs:
           node-version: 18
 
       
-      - name: Connect to DB
-        run: docker run --name couchDB -p5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=admin couchdb:3.3.2 -d && sleep 10
+      # - name: Connect to DB
+      #   run: docker run --name couchDB -p5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=admin couchdb:3.3.2 -d 
         
 
       - name: Check connection to DB
