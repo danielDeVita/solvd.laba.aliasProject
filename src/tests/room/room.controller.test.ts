@@ -5,18 +5,24 @@ import { server } from '../../app';
 import request from 'supertest';
 import Nano from 'nano';
 
+
+const randomEmail1 = `EMAIL_1${Date.now()}@mail.com`; //to skip unique email validation
+const randomEmail2 = `EMAIL_2${Date.now()}@mail.com`; //to skip unique email validation
+const randomEmail3 = `EMAIL_3${Date.now()}@mail.com`; //to skip unique email validation
+
+
 afterAll(async () => {
-  const couchdbUrl = `${process.env.COUCH_DB_URL}`;
-  const couch = Nano(couchdbUrl);
-  await couch.db.destroy('users');
-  await couch.db.destroy('gameroom');
-  await couch.db.destroy('messages');
+  // const couchdbUrl = `${process.env.COUCH_DB_URL}`;
+  // const couch = Nano(couchdbUrl);
+  // await couch.db.destroy('users');
+  // await couch.db.destroy('gameroom');
+  // await couch.db.destroy('messages');
   server.close();
 });
 
 // Users to create
 const user1ToRegister = {
-  email: 'testUser@gmail.com',
+  email: randomEmail1,
   password: 'password',
   firstName: 'firstName',
   lastName: 'lastName',
@@ -24,7 +30,7 @@ const user1ToRegister = {
 };
 
 const user2ToRegister = {
-  email: 'testUser2@gmail.com',
+  email: randomEmail2,
   password: 'password2',
   firstName: 'firstName2',
   lastName: 'lastName2',
@@ -32,7 +38,7 @@ const user2ToRegister = {
 };
 
 const user3ToRegister = {
-  email: 'testUser3@gmail.com',
+  email: randomEmail3,
   password: 'password3',
   firstName: 'firstName3',
   lastName: 'lastName3',
