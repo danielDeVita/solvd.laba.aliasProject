@@ -15,9 +15,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+
       - uses: "cobot/couchdb-action@master"
         with:
-          couchdb version: "2.3.1"
+          couchdb version: "3.3.2"
+
       - name: Install dependencies
         run: npm ci
       - name: Lint
