@@ -1,4 +1,4 @@
-version: 4.23.0
+version: '4.23.0'
 services:
   Database:
     image: couchdb:3.3.2
