@@ -3,7 +3,7 @@ name: Alias Game Team 1
 on:
   push:
     branches:
-      - CI
+      - Main
 
 jobs:
   deploy:
