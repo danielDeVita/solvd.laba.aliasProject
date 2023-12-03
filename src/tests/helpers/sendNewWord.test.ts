@@ -58,7 +58,7 @@ describe('sendNewWordTo', () => {
     jest.clearAllMocks();
   });
 
-  it.skip('should send new word to player and emit event to socket if conditions are met', () => {
+  it('should send new word to player and emit event to socket if conditions are met', () => {
     sendNewWordTo(gameState, socket, io);
 
     expect(gameState.currentWord).toBe('newWord');
