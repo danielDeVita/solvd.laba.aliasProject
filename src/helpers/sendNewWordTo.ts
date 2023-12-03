@@ -38,7 +38,7 @@ export const sendNewWordTo = (
       
       gameState.currentWord = getUniqueWord(gameState.wordsHistory);
       gameState.wordGuessed = false;
-
+      gameState.hinted = false;
       if (socket.id === gameState.currentPlayer)
         socket.emit('new-word', gameState.currentWord);
       else

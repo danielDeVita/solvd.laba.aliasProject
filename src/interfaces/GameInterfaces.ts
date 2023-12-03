@@ -31,6 +31,7 @@ export interface GameState {
   wordsHistory: string[];
   currentPlayer: string; //socket id of player giving hints
   finishedTurns: number;
+  hinted: boolean; // whether a hint has been given for current word or not
 }
 
 export interface IJoinGameRoomInfo {
