@@ -24,9 +24,9 @@ export const startGame = (socket: Socket, io: Server) => {
 
         // Logic for changing turns
         const turnChangerLogic = () => {
-
-          // check if game has already reached set amount of rounds
-          if (gameState.finishedTurns / 2 >= gameState.roundsToPlay) {
+          
+          // check if game has already reached set amount of rounds or if either team has less than 2 players
+          if ((gameState.finishedTurns / 2 >= gameState.roundsToPlay) || (gameState.teamAPlayers.size < 2 || gameState.teamBPlayers.size < 2)) {
             clearInterval(turnChanger);
             finishGame(gameState);
             io.to(body.roomId).emit('finish-game-results', {
@@ -71,7 +71,7 @@ export const startGame = (socket: Socket, io: Server) => {
                 gameState.roundTime * 1000
               );
               clearInterval(endSteal);
-            }, 30000) // gives the other team 30 seconds
+            }, 5000) // gives the other team 30 seconds
 
             // Interval for checking if the word was guessed and the "steal" phase should end
             const endSteal = setInterval(() => {
