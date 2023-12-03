@@ -86,6 +86,7 @@ beforeEach(async () => {
     wordsHistory: [],
     currentPlayer: mockedSocket3Id,
     finishedTurns: 0,
+    hinted: true,
   };
 
   mockedRoom.teamAPlayers.add(mockedSocket1.id);
