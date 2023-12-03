@@ -8,6 +8,8 @@ import { sendHint } from '../services/game/sendHint';
 import { playerReady } from '../services/game/playerReady';
 import request from 'supertest';
 import { server } from '../../src/app';
+import { startGame } from '../services/game/startGame';
+import * as sinon from 'sinon';
 
 // Creating mocked socket
 const mockedSocket1Id = 'someSockedId1';
@@ -89,6 +91,7 @@ beforeEach(async () => {
     hinted: true,
   };
 
+  // Adding players to the teams
   mockedRoom.teamAPlayers.add(mockedSocket1.id);
   mockedRoom.teamAPlayers.add(mockedSocket2.id);
   mockedRoom.teamBPlayers.add(mockedSocket3.id);
@@ -268,5 +271,41 @@ describe('Testing playerReady callback', () => {
 
     expect(mockedSocket1.to).not.toHaveBeenCalled();
     expect(mockedSocket1.emit).not.toHaveBeenCalled();
+  });
+});
+
+describe('Testing startGame callback', () => {
+  it('Should not start the game if there are not enough players', () => {
+    const startGameHandler = startGame(mockedSocket1, mockedIO);
+    startGameHandler({ roomId });
+    expect(mockedIO.emit).not.toHaveBeenCalled();
+    expect(mockedIO.to).not.toHaveBeenCalled();
+    expect(mockedSocket1.emit).toHaveBeenCalledWith(
+      'error',
+      '{"error":{"status":400,"message":"Not enough players"}}'
+    );
+    expect(mockedSocket1.to).not.toHaveBeenCalled();
+  });
+
+  it('Should start the game if all players are join', () => {
+    // Adding missing player to teamB
+    mockedRoom.teamBPlayers.add(mockedSocket4.id);
+    const startGameHandler = startGame(mockedSocket1, mockedIO);
+
+    startGameHandler({ roomId });
+    expect(mockedIO.to).toHaveBeenCalledWith(mockedUserInfo.roomId);
+    expect(mockedIO.emit).toHaveBeenCalledWith(
+      'new-word-sent-to',
+      `New word sent to ${mockedUserInfo.username} from team teamBPlayers`
+    );
+
+    const clock = sinon.useFakeTimers();
+
+    clock.tick(mockedRoom.roundTime * 1000);
+    expect(mockedSocket1.to).toHaveBeenCalledWith(mockedUserInfo.roomId);
+    // Called one time for announcing another team plays, another time for
+    // sending new word
+    expect(mockedSocket1.emit).toHaveBeenCalledTimes(2);
+
   });
 });
