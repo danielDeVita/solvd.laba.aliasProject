@@ -10,7 +10,7 @@ export class CustomError extends Error {
    * @param message The error message
    * @param status The error status code
    */
-  constructor(message: string, status: number) {
+  constructor(message: string = 'Unexpected error', status: number = 500) {
     super(message || 'Unexpected error');
     this.status = status || 500;
   }
