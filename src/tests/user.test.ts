@@ -1,10 +1,10 @@
 import { server } from "../app";
 import request from "supertest";
-import Nano from "nano";
+// import Nano from "nano";
 
-const couchdbUrl = `${process.env.COUCH_DB_URL}`;
+// const couchdbUrl = `${process.env.COUCH_DB_URL}`;
 
-const couch = Nano(couchdbUrl);
+// const couch = Nano(couchdbUrl);
 
 beforeAll(async () => {});
 
