@@ -7,7 +7,7 @@ services:
     container_name: couchdb
     environment:
       COUCHDB_USER: ${COUCHDB_USER:-admin}
-      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:-1235813}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:-admin}
     volumes:
       - volume-1:/opt/couchdb/data
   app-test-run:
@@ -21,6 +21,12 @@ services:
       - appnet
     environment:
       COUCH_DOCKER_DB_URL: ${COUCH_DOCKER_DB_URL}
+      PORT: 3000
+      NODE_ENV: dev
+      COUCHDB_USER: admin
+      COUCHDB_PASSWORD: admin
+      COUCH_DB_URL: http://admin:admin@Database:5984
+      
 networks:
   appnet:
     driver: bridge

@@ -12,7 +12,10 @@ const databases = {
   users: createDatabase('users'),
   gameRoom: createDatabase('gameroom'),
   messages: createDatabase('messages'),
+  _users:createDatabase('_users')
 };
+
+databases._users
 
 async function createDatabase(dbName: string) {
   const dbExists = await couch.db.get(dbName).catch((err) => {
