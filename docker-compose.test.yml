@@ -1,0 +1,29 @@
+version: '4.23.0'
+services:
+  Database:
+    image: couchdb:3.3.2
+    networks:
+      - appnet
+    container_name: couchdb
+    environment:
+      COUCHDB_USER: ${COUCHDB_USER:-admin}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:-1235813}
+    volumes:
+      - volume-1:/opt/couchdb/data
+  app-test-run:
+    build:
+      dockerfile: ./Dockerfile.test
+    ports:
+      - 3000:3000
+    depends_on:
+      - Database
+    networks:
+      - appnet
+    environment:
+      COUCH_DOCKER_DB_URL: ${COUCH_DOCKER_DB_URL}
+networks:
+  appnet:
+    driver: bridge
+
+volumes:
+  volume-1:

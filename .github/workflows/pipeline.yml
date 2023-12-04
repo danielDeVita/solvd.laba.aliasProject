@@ -1,0 +1,25 @@
+name: Alias Game Team 1
+
+on:
+  push:
+    branches:
+      - Main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Tests inside container for testing
+        run: docker compose -f docker-compose.test.yml

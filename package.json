@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --exec ts-node src/app.ts",
+    "start": "NODE_ENV=dev nodemon --exec ts-node src/app.ts",
     "dev": "nodemon --exec ts-node src/app.ts",
     "build": "tsc",
     "compose": "rm -rf dist && npx tsc && docker compose up -d",
-    "test": "jest --runInBand --forceExit"
+    "test": "jest --runInBand --forceExit",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.2",
