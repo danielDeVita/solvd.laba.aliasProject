@@ -1,5 +1,5 @@
 import { databases } from "../db/couchDb";
-import { IUser } from "../interfaces/IUser";
+// import { IUser } from "../interfaces/IUser";
 import { UserDto } from "../dtos/UserDto";
 import Nano from "nano";
 

@@ -1,8 +1,8 @@
 import {Router} from 'express';
 import path from 'path';
 import chatMessageController from '../controllers/chatMessageController';
-import { validateReqBody } from '../middlewares/validateBody';
-import { chatMessageSchema } from '../middlewares/validateBody/schemas/chatSchema';
+// import { validateReqBody } from '../middlewares/validateBody';
+// import { chatMessageSchema } from '../middlewares/validateBody/schemas/chatSchema';
 
 const router = Router();
 
