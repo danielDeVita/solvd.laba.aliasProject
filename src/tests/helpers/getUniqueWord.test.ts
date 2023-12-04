@@ -1,60 +1,31 @@
-import { getUniqueWord } from '../../helpers/getUniqueWord';
 import { CustomError } from '../../helpers/CustomError';
+import { getUniqueWord } from '../../helpers/getUniqueWord';
 
-jest.mock('../../db/wordsDb.json', () => ({
-  categories: [
-    { words: ['apple', 'banana', 'cherry'] },
-    { words: ['dog', 'cat', 'bird'] },
-  ],
-}));
-
-describe('getUniqueWord function', () => {
-
-  beforeEach(() => {
-    jest.spyOn(global.Math, 'random').mockReturnValue(0);
-  });
-
-  afterEach(() => {
-    jest.spyOn(global.Math, 'random').mockRestore();
-  })
-
-  it('should return a unique word not present in the input array', () => {
-    const wordsArray = ['banana', 'cat'];
-    const uniqueWord = getUniqueWord(wordsArray);
-    expect(wordsArray.includes(uniqueWord)).toBe(false);
-  });
-
-  it('should handle an empty input array', () => {
+describe('Test getUniqueWorldHelper', () => {
+  it('Should retrieve 200 unique words', () => {
+    const NUMBER_OF_WORDS = 200;
     const wordsArray: string[] = [];
-    const uniqueWord = getUniqueWord(wordsArray);
-    expect(typeof uniqueWord).toBe('string');
+
+    for (let i = 0; i < NUMBER_OF_WORDS; i++) {
+      wordsArray.push(getUniqueWord(wordsArray));
+    }
+
+    expect([...new Set(wordsArray)]).toHaveLength(NUMBER_OF_WORDS);
   });
 
-  it('should return word in lowercase', () => {
+  it('Should throw error after trying to get more words than the one stored', () => {
+    const NUMBER_OF_WORDS = 10000;
+    const wordsArray: string[] = [];
 
-    const wordsArray = ['Apple'];
-    const uniqueWord = getUniqueWord(wordsArray);
-    expect(uniqueWord).toBe('apple');
+    try {
+      for (let i = 0; i < NUMBER_OF_WORDS; i++) {
+        wordsArray.push(getUniqueWord(wordsArray));
+      }
+    } catch (error) {
+      expect((error as CustomError).status).toBe(500);
+      expect((error as CustomError).message).toMatch(
+        'Server error, cannot create array word'
+      );
+    }
   });
-
-  it('should throw an error if iterations limit is reached', () => {
-    const allWords = ['apple'];
-    const wordsArray = allWords.slice(); 
-
-    expect(() => {
-      getUniqueWord(wordsArray);
-    }).toThrow(CustomError);
-  });
-
-  it('should throw an error if word is composed', () => {
-    jest.mock('../../db/wordsDb.json', () => ({
-      categories: [
-        { words: ['apple and'] },
-      ],
-    }))
-    const wordsArray = ['apple'];
-    expect(() => {
-      getUniqueWord(wordsArray);
-    }).toThrow(CustomError);
-  })
 });

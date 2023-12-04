@@ -1,7 +1,7 @@
-import { gameRoomPoints } from '../../interfaces/GameInterfaces';
-import { GameRoomDto } from '../../dtos/GameRoomDto';
-import roomService from '../../services/roomService';
-import { server } from '../../app';
+import { gameRoomPoints } from '../interfaces/GameInterfaces';
+import { GameRoomDto } from '../dtos/GameRoomDto';
+import roomService from '../services/roomService';
+import { server } from '../app';
 import request from 'supertest';
 import Nano from 'nano';
 
@@ -218,6 +218,32 @@ describe('Testing room routes', () => {
       .expect(200);
 
     expect(res.body).toHaveLength(NUMBER_OF_ROOMS);
+  });
+
+  it('Get /user/:userId status should be 400 if query parameters are incorrect', async () => {
+    const PAGES = -1;
+    const PAGE_OFFSET = -1;
+    const ORDER = 'invalidOrder';
+
+    await request(server)
+      .get(`/room/user/${user1ToRegister.email}?pages=${PAGES}`)
+      .set('Authorization', `Bearer: ${authToken1}`)
+      .expect(400);
+
+    await request(server)
+      .get(`/room/user/${user1ToRegister.email}?order=${ORDER}`)
+      .set('Authorization', `Bearer: ${authToken1}`)
+      .expect(400);
+
+    await request(server)
+      .get(`/room/user/${user1ToRegister.email}?pageOffset=${PAGE_OFFSET}`)
+      .set('Authorization', `Bearer: ${authToken1}`)
+      .expect(400);
+
+    await request(server)
+      .get(`/room/user/`)
+      .set('Authorization', `Bearer: ${authToken1}`)
+      .expect(422);
   });
 
   it('Should update the end game room score', async () => {
